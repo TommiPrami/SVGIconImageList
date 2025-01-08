@@ -3,7 +3,7 @@
 {       SVG Icon ImageList: An extended ImageList for Delphi/VCL               }
 {       to simplify use of Icons (resize, colors and more...)                  }
 {                                                                              }
-{       Copyright (c) 2019-2024 (Ethea S.r.l.)                                 }
+{       Copyright (c) 2019-2025 (Ethea S.r.l.)                                 }
 {       Author: Carlo Barazzetta                                               }
 {       Contributors:                                                          }
 {         Nicola Tambascia                                                     }
@@ -32,13 +32,10 @@ interface
 {$INCLUDE SVGIconImageList.inc}
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, ImgList,
-  StdCtrls, Buttons, StdActns,
-  ActnList, ExtCtrls, ComCtrls, ToolWin,
-  System.Actions, System.ImageList,
-  Spin, SVGIconImageList, SVGIconImage, Vcl.ExtDlgs, Vcl.CategoryButtons,
-  SVGIconImageListBase;
+  System.Actions, System.ImageList, Vcl.Forms,
+  SVGIconImageList, SVGIconImage, Vcl.ExtDlgs, Vcl.CategoryButtons,
+  SVGIconImageListBase, Vcl.ImgList, Vcl.Controls, Vcl.ComCtrls, Vcl.ToolWin,
+  Vcl.ExtCtrls, System.Classes;
 
 type
   TMainForm = class(TForm)
@@ -76,7 +73,7 @@ uses
   {$ENDIF}
   , SVGIconUtils
   , SVGTextPropertyEditorUnit
-  , SVG;
+  ;
 
 {$IFDEF HiDPISupport}
 procedure TMainForm.FormAfterMonitorDpiChanged(Sender: TObject; OldDPI, NewDPI: Integer);

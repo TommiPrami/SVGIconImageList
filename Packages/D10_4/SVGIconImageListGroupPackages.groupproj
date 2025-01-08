@@ -3,6 +3,9 @@
         <ProjectGuid>{23E38E32-FA2D-4698-B906-A5C6A5F40068}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
+        <Projects Include="SVGIconImageListRestClient.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="SVGImage32Package.dproj">
             <Dependencies/>
         </Projects>
@@ -26,6 +29,15 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+    <Target Name="SVGIconImageListRestClient">
+        <MSBuild Projects="SVGIconImageListRestClient.dproj"/>
+    </Target>
+    <Target Name="SVGIconImageListRestClient:Clean">
+        <MSBuild Projects="SVGIconImageListRestClient.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SVGIconImageListRestClient:Make">
+        <MSBuild Projects="SVGIconImageListRestClient.dproj" Targets="Make"/>
+    </Target>
     <Target Name="SVGImage32Package">
         <MSBuild Projects="SVGImage32Package.dproj"/>
     </Target>
@@ -72,13 +84,51 @@
         <MSBuild Projects="dclSVGIconImageListFMX.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="SVGImage32Package;SVGIconImageList;dclSVGIconImageList;SVGIconImageListFMX;dclSVGIconImageListFMX"/>
+        <CallTarget Targets="SVGIconImageListRestClient;SVGImage32Package;SVGIconImageList;dclSVGIconImageList;SVGIconImageListFMX;dclSVGIconImageListFMX"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SVGImage32Package:Clean;SVGIconImageList:Clean;dclSVGIconImageList:Clean;SVGIconImageListFMX:Clean;dclSVGIconImageListFMX:Clean"/>
+        <CallTarget Targets="SVGIconImageListRestClient:Clean;SVGImage32Package:Clean;SVGIconImageList:Clean;dclSVGIconImageList:Clean;SVGIconImageListFMX:Clean;dclSVGIconImageListFMX:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SVGImage32Package:Make;SVGIconImageList:Make;dclSVGIconImageList:Make;SVGIconImageListFMX:Make;dclSVGIconImageListFMX:Make"/>
+        <CallTarget Targets="SVGIconImageListRestClient:Make;SVGImage32Package:Make;SVGIconImageList:Make;dclSVGIconImageList:Make;SVGIconImageListFMX:Make;dclSVGIconImageListFMX:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+    <ItemGroup Condition="'$(BuildGroup)'=='ALL'">
+        <BuildGroupProject Include="SVGIconImageListRestClient.dproj">
+            <ProjectGuid>{0AC6F512-DFD8-4BF8-988C-934C5CA45675}</ProjectGuid>
+            <Configurations>Release</Configurations>
+            <Platforms>Win32;Win64</Platforms>
+            <Enabled>True</Enabled>
+        </BuildGroupProject>
+        <BuildGroupProject Include="SVGImage32Package.dproj">
+            <ProjectGuid>{B99FE27C-AFB6-4F9D-81C1-CB6C06A5075F}</ProjectGuid>
+            <Configurations>Release</Configurations>
+            <Platforms>Win32;Win64</Platforms>
+            <Enabled>True</Enabled>
+        </BuildGroupProject>
+        <BuildGroupProject Include="SVGIconImageList.dproj">
+            <ProjectGuid>{67EDECA9-2CF8-4EB1-BCE1-910D4B3F08F1}</ProjectGuid>
+            <Configurations>Release</Configurations>
+            <Platforms>Win32;Win64</Platforms>
+            <Enabled>True</Enabled>
+        </BuildGroupProject>
+        <BuildGroupProject Include="dclSVGIconImageList.dproj">
+            <ProjectGuid>{E2019DDD-8241-4D27-BDC9-9941252DAC1D}</ProjectGuid>
+            <Configurations>Release</Configurations>
+            <Platforms>Win32</Platforms>
+            <Enabled>True</Enabled>
+        </BuildGroupProject>
+        <BuildGroupProject Include="SVGIconImageListFMX.dproj">
+            <ProjectGuid>{2CD11B99-3805-4F90-B598-3652213872B2}</ProjectGuid>
+            <Configurations>Release</Configurations>
+            <Platforms>Win32;Win64</Platforms>
+            <Enabled>True</Enabled>
+        </BuildGroupProject>
+        <BuildGroupProject Include="dclSVGIconImageListFMX.dproj">
+            <ProjectGuid>{AC5E58B2-BDF0-4A77-9084-92441FBD9BC2}</ProjectGuid>
+            <Configurations>Release</Configurations>
+            <Platforms>Win32</Platforms>
+            <Enabled>True</Enabled>
+        </BuildGroupProject>
+    </ItemGroup>
 </Project>

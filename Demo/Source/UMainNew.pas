@@ -3,7 +3,7 @@
 {       SVG Icon ImageList: An extended ImageList for Delphi/VCL               }
 {       to simplify use of Icons (resize, colors and more...)                  }
 {                                                                              }
-{       Copyright (c) 2019-2024 (Ethea S.r.l.)                                 }
+{       Copyright (c) 2019-2025 (Ethea S.r.l.)                                 }
 {       Author: Carlo Barazzetta                                               }
 {       Contributors:                                                          }
 {         Nicola Tambascia, Vincent Parrett                                    }
@@ -32,15 +32,23 @@ interface
 {$INCLUDE SVGIconImageList.inc}
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, ImgList,
-  StdCtrls, Buttons, StdActns,
-  ActnList, ExtCtrls, ComCtrls, ToolWin,
-  Spin, SVGIconImage, Vcl.ExtDlgs,
+  SVGIconImage,
+  Vcl.ExtDlgs,
   System.Actions,
   System.ImageList,
   SVGIconImageCollection,
-  UDataModule, Vcl.VirtualImageList;
+  UDataModule,
+  Vcl.VirtualImageList,
+  Vcl.ExtCtrls,
+  Vcl.Dialogs,
+  Vcl.ImgList,
+  System.Classes,
+  Vcl.ActnList,
+  Vcl.Controls,
+  Vcl.ComCtrls,
+  Vcl.ToolWin,
+  Vcl.StdCtrls,
+  Vcl.Forms;
 
 type
   TMainForm = class(TForm)
@@ -126,15 +134,12 @@ implementation
 {$R *.dfm}
 
 uses
-  Image32SVGFactory
-//  , PasSVGFactory
-//  , SkiaSVGFactory
-//  , D2DSVGFactory
-
-  , Themes
+  Vcl.Themes
+  , System.SysUtils
   {$IFDEF DXE3+}
-  , UITypes
+  , System.UITypes
   {$ENDIF}
+  , SVGRESTClientFormUnit
   , SVGIconUtils
   , SVGTextPropertyEditorUnit
   , SVGIconImageListEditorUnit;

@@ -3,7 +3,7 @@
 {       SVG Icon ImageList: An extended ImageList for Delphi/VCL               }
 {       to simplify use of Icons (resize, colors and more...)                  }
 {                                                                              }
-{       Copyright (c) 2019-2024 (Ethea S.r.l.)                                 }
+{       Copyright (c) 2019-2025 (Ethea S.r.l.)                                 }
 {       Author: Carlo Barazzetta                                               }
 {       Contributors:                                                          }
 {         Nicola Tambascia, Vincent Parrett                                    }
@@ -33,7 +33,9 @@ uses
   {$IFDEF MSWINDOWS}
   FMX.SVGIconImageListEditorUnit in '..\..\Packages\FMX.SVGIconImageListEditorUnit.pas' {SVGIconImageListEditorFMX},
   {$ENDIF }
-  UMainFMX in '..\Source\UMainFMX.pas' {SVGIconImageListForm};
+  UMainFMX in '..\Source\UMainFMX.pas' {SVGIconImageListForm},
+  Browser.IconifyApi in '..\Source\Browser.IconifyApi.pas',
+  FMX.SVGRESTClientFormUnit in '..\..\Packages\FMX.SVGRESTClientFormUnit.pas' {SVGRESTClientSearchForm};
 
 {$R *.res}
 

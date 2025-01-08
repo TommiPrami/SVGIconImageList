@@ -27,18 +27,20 @@ package dclSVGIconImageListFMX;
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'Ethea SVGIconImageList  FMX components'}
-{$LIBSUFFIX '_D10_3'}
+{$LIBSUFFIX '260'}
 {$DESIGNONLY}
-{$IMPLICITBUILD ON}
+{$IMPLICITBUILD OFF}
 
 requires
   DesignIDE,
   dclfmxstd,
+  SVGIconImageListRestClient,
   SVGIconImageListFMX;
 
 contains
   FMX.SVGIconImageRegister in '..\FMX.SVGIconImageRegister.pas',
   FMX.SVGIconImageListEditorUnit in '..\FMX.SVGIconImageListEditorUnit.pas' {SVGIconImageListEditorFMX},
-  FMX.SVGTextPropertyEditorUnit in '..\FMX.SVGTextPropertyEditorUnit.pas' {SVGTextPropertyEditorFormFMX};
+  FMX.SVGTextPropertyEditorUnit in '..\FMX.SVGTextPropertyEditorUnit.pas' {SVGTextPropertyEditorFormFMX},
+  FMX.SVGRESTClientFormUnit in '..\FMX.SVGRESTClientFormUnit.pas' {SVGRESTClientSearchForm};
 
 end.
