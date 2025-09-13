@@ -2,8 +2,8 @@ unit Img32.SVG.Reader;
 
 (*******************************************************************************
 * Author    :  Angus Johnson                                                   *
-* Version   :  4.8                                                             *
-* Date      :  6 July 2025                                                     *
+* Version   :  4.9                                                             *
+* Date      :  4 September 2025                                                *
 * Website   :  https://www.angusj.com                                          *
 * Copyright :  Angus Johnson 2019-2025                                         *
 *                                                                              *
@@ -126,6 +126,7 @@ type
     pathsLoaded : Boolean;
     drawPathsO  : TPathsD; //open only
     drawPathsC  : TPathsD; //closed only
+    procedure ResetPaths;
     function GetBounds: TRectD; virtual;
     function  HasMarkers: Boolean;
     procedure GetPaths(const drawDat: TDrawData); virtual;
@@ -748,6 +749,7 @@ begin
       drawDat.fillColor := thisElement.fSvgReader.currentColor
     else if (fillColor <> clInvalid) then
       drawDat.fillColor := fillColor;
+
     if fillOpacity <> InvalidD then
       drawDat.fillOpacity := fillOpacity;
     if (fillEl <> '') then
@@ -755,7 +757,10 @@ begin
     if (strokeColor = clCurrent) then
       drawDat.strokeColor := thisElement.fSvgReader.currentColor
     else if strokeColor <> clInvalid then
-      drawDat.strokeColor := strokeColor;
+      drawDat.strokeColor := strokeColor
+    else if currentColor <> clInvalid then
+      drawDat.strokeColor := currentColor;
+
     if strokeOpacity <> InvalidD then
       drawDat.strokeOpacity := strokeOpacity;
     if strokeWidth.IsValid then
@@ -1325,7 +1330,8 @@ begin
       if clipEl.fDrawData.fillRule = frNegative then
         fr := frNonZero else
         fr := clipEl.fDrawData.fillRule;
-      EraseOutsidePaths(tmpImg, clipPaths, fr, clipRec, fSvgReader.fCustomRendererCache);
+      EraseOutsidePaths(tmpImg, clipPaths,
+        fr, clipRec, fSvgReader.fCustomRendererCache);
       image.CopyBlend(tmpImg, clipRec, dstClipRec, BlendToAlphaLine);
     finally
       tmpImg.Free;
@@ -1808,6 +1814,8 @@ begin
   if units = hUserSpaceOnUse then
     rec2 := fSvgReader.userSpaceBounds else
     rec2 := drawDat.bounds;
+  if rec2.IsEmpty then rec2 := RectD(0, 0, 1, 1);
+
 
   with TLinearGradientRenderer(renderer) do
   begin
@@ -2635,6 +2643,14 @@ begin
 end;
 //------------------------------------------------------------------------------
 
+procedure TShapeElement.ResetPaths;
+begin
+  drawPathsO := nil;
+  drawPathsC := nil;
+  pathsLoaded := False;
+end;
+//------------------------------------------------------------------------------
+
 function TShapeElement.GetBounds: TRectD;
 var
   i: integer;
@@ -3048,6 +3064,7 @@ begin
       if joinStyle = jsRound then
         endStyle := esRound else
         endStyle := esButt;
+
       dashArray := ScaleDashArray(drawDat.dashArray, 1);  // ie. don't scale yet!
       strokePaths := nil;
       for i := 0 to High(paths) do
@@ -3065,9 +3082,11 @@ begin
     end;
   end else
   begin
+
     if fDrawData.strokeCap = esClosed then
       endStyle := esButt else
       endStyle := fDrawData.strokeCap;
+
     if Assigned(dashArray) then
     begin
       strokePaths := MatrixApply(paths, drawDat.matrix);
@@ -3076,6 +3095,7 @@ begin
         fSvgReader.fCustomRendererCache);
       Exit;
     end;
+
     strokePaths :=
       RoughOutline(paths, sw, joinStyle, endStyle, miterLim, scale);
   end;
@@ -4550,6 +4570,11 @@ begin
     len := Length(dashArray);
     while ParseNextNum(c, endC, true, val) do
     begin
+      if val < 0 then // ie invalid!
+      begin
+        dashArray := nil;
+        Exit;
+      end;
       SetLength(dashArray, len +1);
       dashArray[len] := val;
       inc(len);
@@ -4877,7 +4902,7 @@ begin
     case hash of
       hMiter  : strokeJoin := jsMiter;
       hRound  : strokeJoin := jsRound;
-      hBevel  : strokeJoin := jsSquare;
+      hBevel  : strokeJoin := jsButt;
     end;
 end;
 //------------------------------------------------------------------------------
@@ -5614,7 +5639,7 @@ var
   i: integer;
 begin
   if el is TShapeElement then
-    TShapeElement(el).pathsLoaded := False;
+    TShapeElement(el).ResetPaths;
   for i := 0 to el.ChildCount -1 do
     InternalResetPaths(el[i]);
 end;
