@@ -2,7 +2,7 @@
 
 ## Four engines to render SVG (Delphi Image32, SVGMagic, Skia4Delphi, Direct2D wrapper) and four components to simplify use of SVG images (resize, fixedcolor, grayscale...)
 
-### Actual official version 4.7.4 (VCL+FMX)
+### Actual official version 4.7.5 (VCL+FMX)
 
 | Component | Description |
 | - | - |
@@ -138,6 +138,11 @@ A similar project made by Ethea for Icon Fonts: [https://github.com/EtheaDev/Ico
 Related links: [embarcadero.com](https://www.embarcadero.com) - [learndelphi.org](https://learndelphi.org)
 
 ### RELEASE NOTES
+03 Sep 2026 - version 4.7.5
+- Added 18 and 24 pixel options to Export Png dialog
+- Fixed Delphi 12 Packages
+- Fixed VirtualImageList attributes (FixedColor, GrayScale, Opacity, ApplyFixedColorToRootOnly, AntiAliasColor) when multiple TSVGIconVirtualImageList share the same TSVGIconImageCollection (Delphi 10.3+)
+
 16 Jun 2026 - version 4.7.4
 - Removed Build for Windows ARM Platform by Installer
 - Fixed "DisableOpacity" value in Icons with TToolBar/DisabledImageList
